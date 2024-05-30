@@ -1,0 +1,3 @@
+productos -> lista de productos estaticos
+albaranes -> pedidos que hacemos para aumentar el stock
+facturas -> baja el stock de los alabaranes no puede gastar mas de lo que ya esta
