@@ -6,36 +6,38 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Facturas</h1>
+    <h1>Albaranes</h1>
     <table border style="text-align: center;">
         <thead>
            <tr>
                <th>NºAlbaran</th>
                <th>ID Producto</th>
-               <th>Cantidad venta</th>
-               <th>Fecha de venta</th>
-               <th>ID Cliente</th>
+               <th>Cantidad de productos</th>
+               <th>Proveedor</th>
+               <th>Fecha de creacion</th>
+               <th>Usuario</th>
            </tr>
        
         </thead>
         <tbody>
-           {% for factura in facturas %}
+           {% for albaran in albaranes %}
            <tr>
-               <td>{{factura.id_factura}}</td>
-               <td>{{factura.id_producto}}</td>
-               <td>{{factura.cantidad_vendida}}</td>
-               <td>{{factura.fecha_venta}}</td>
-               <td>{{factura.id_cliente}}</td>
+               <td>{{albaran.id_albaran}}</td>
+               <td>{{albaran.id_producto}}</td>
+               <td>{{albaran.cantidad_pedido}}</td>
+               <td>{{albaran.proveedor}}</td>
+               <td>{{albaran.fecha_creacion}}</td>
+               <td>{{albaran.usuario}}</td>
            </tr>
            {% endfor %}
         </tbody>
        </table>
 
-
-    <h1>CREA UNA FACTURA</h1>
+    <h1>Generar nuevo albaran</h1>
     <form method="post" >
         <label >Producto {{form.producto}}</label>
-        <label for="">Cantidad {{form.cantidad}}</label>
+   
+        <label >Cantidad {{form.cantidad}}</label>
         <button type="submit">Enviar</button>
     </form>
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -43,10 +45,8 @@
         {% set category, message = messages[0] %}
         <div >{{ message }}</div>
     {% endif %}
-{% endwith %}
+     {% endwith %}
+
+ 
 </body>
 </html>
-
-
-
-
