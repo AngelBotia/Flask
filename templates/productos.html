@@ -7,10 +7,25 @@
 </head>
 <body>
     <h1>PRODUCTOS</h1>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <label >Nombre {{form.nombre}}</label>
+        <label >Cantidad {{form.cantidad}}</label>
+        <label >Descripcion {{form.descripcion}}</label>
+        <label >Precio Und. {{form.precio_unitario}}</label>
 
+
+        <button type="submit">Enviar</button>
+    </form>
+    <p>
+        {% for error in form.producto.errors %}
+        {{ error }}
+        {% endfor %}
+    </p>
     <table border style="text-align: center;">
      <thead>
         <tr>
+            <th>ID</th>
             <th>Nombre</th>
             <th>Cantidad</th>
             <th>Descripcion</th>
@@ -21,6 +36,7 @@
      <tbody>
         {% for producto in productos %}
         <tr>
+            <td>{{producto.id_producto}}</td>
             <td>{{producto.nombre}}</td>
             <td>{{producto.cantidad}}</td>
             <td>{{producto.descripcion}}</td>

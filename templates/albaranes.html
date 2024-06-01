@@ -6,6 +6,14 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Generar nuevo albaran</h1>
+    <form method="post" >
+        {{ form.hidden_tag() }}
+        <label >Producto {{form.producto}}</label>
+        <label >Cantidad {{form.cantidad}}</label>
+ 
+        <button type="submit">Enviar</button>
+    </form>
     <h1>Albaranes</h1>
     <table border style="text-align: center;">
         <thead>
@@ -33,13 +41,6 @@
         </tbody>
        </table>
 
-    <h1>Generar nuevo albaran</h1>
-    <form method="post" >
-        <label >Producto {{form.producto}}</label>
-   
-        <label >Cantidad {{form.cantidad}}</label>
-        <button type="submit">Enviar</button>
-    </form>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% set category, message = messages[0] %}

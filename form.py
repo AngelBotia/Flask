@@ -8,12 +8,14 @@ class PostForm(FlaskForm):
         ])
 
 class ProductosForm(FlaskForm):
-    producto = SelectField('Producto', choices=[], coerce=int)
-    cantidad = IntegerField('Cantidad', validators=[validators.DataRequired(), validators.NumberRange(min=1)])
-
+    producto = SelectField('producto', choices=[], coerce=lambda x: int(x) if x is not None else None)
+    cantidad = IntegerField('cantidad', validators=[validators.DataRequired(), validators.NumberRange(min=0)])
+    nombre = StringField('nombre',[validators.Length(min=4, max=200)])
+    descripcion = StringField('descripcion',[validators.Length(min=4, max=255)])
+    precio_unitario = IntegerField('precio', validators=[validators.DataRequired(), validators.NumberRange(min=0)])
 class AlbaranForm(FlaskForm):
     id_albaran = SelectField('id_albaran', choices=[], coerce=int)
-    id_producto = IntegerField('id_producto', validators=[validators.DataRequired(), validators.NumberRange(min=0)])
-    cantidad_pedido = IntegerField('cantidad_pedido', validators=[validators.DataRequired(), validators.NumberRange(min=0)])
+    id_producto =  SelectField('id_producto', 'Producto', choices=[], coerce=int)
+    cantidad_pedido = IntegerField('cantidad_pedido', validators=[validators.DataRequired(), validators.NumberRange(min=1)])
     proveedor = StringField('proveedor',[validators.Length(min=4, max=200)])
     usuario=StringField('proveedor',[validators.Length(min=2, max=100)])

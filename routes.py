@@ -12,7 +12,19 @@ def home():
 @main.route('/productos',methods=["GET","POST"])
 def mostrar_productos():
     productos = Producto.query.all()
-    return render_template("productos.html",productos=productos)
+    form = ProductosForm()
+   
+    try:    
+        newProduct= Producto(cantidad=form.cantidad.data,nombre=form.nombre.data,descripcion=form.descripcion.data,precio_unitario=form.precio_unitario.data)
+        if not Producto.query.filter_by(nombre=newProduct.nombre).first():#usaremos el nombre como identificador para que no se duplique
+         db.session.add(newProduct)
+         db.session.commit()
+         flash('✅Se ha añadido el producto correctamente','success')
+         redirect("/productos")
+    except Exception as e:
+        db.session.rollback()
+        print("Hubo un problema durante la insercion del producto")
+    return render_template("productos.html",productos=productos,form=form)
 
 
 
@@ -38,9 +50,9 @@ def crear_albaranes():
 def editar_albaranes():
     productos = Producto.query.all()
     albaranes = Albaran.query.all()
-    form = AlbaranForm()
-    form.id_albaran.choices = [(albaran.id_albaran, albaran.id_albaran) for albaran in albaranes]
-    
+    formAlbaran = AlbaranForm()
+    formAlbaran.id_albaran.choices = [(albaran.id_albaran, albaran.id_albaran) for albaran in albaranes]
+    formAlbaran.id_producto = [(producto.id_producto, producto.nombre) for producto in productos]
     
     
     # productToEdit = Producto.query.filter_by(id_producto=form.producto.data).first()
@@ -54,7 +66,7 @@ def editar_albaranes():
     # else:
     #     print("NO SE HA ENCONTRADO EL PRODUCTO EN LA BASE DE DATOS")
         
-    return render_template("albaranesEdit.html",form = form,albaranes=albaranes)
+    return render_template("albaranesEdit.html",form=formAlbaran,albaranes=albaranes,productos=productos)
 
 
 
@@ -74,7 +86,7 @@ def crear_facturas():
             db.session.add(newFactura)
             db.session.commit()
             flash('✅Se ha realizado la factura correctamente','success')
-            redirect("/albaranes")
+            redirect("/facturacion")
         else:
             flash("❌NO SE PUEDE VENDER MAS PRODUCTOS DE LOS QUE HAY EN STOCK",'error')
 
