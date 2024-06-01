@@ -13,9 +13,11 @@ class ProductosForm(FlaskForm):
     nombre = StringField('nombre',[validators.Length(min=4, max=200)])
     descripcion = StringField('descripcion',[validators.Length(min=4, max=255)])
     precio_unitario = IntegerField('precio', validators=[validators.DataRequired(), validators.NumberRange(min=0)])
+
+
 class AlbaranForm(FlaskForm):
     id_albaran = SelectField('id_albaran', choices=[], coerce=int)
-    id_producto =  SelectField('id_producto', 'Producto', choices=[], coerce=int)
+    id_producto =  SelectField('id_producto', choices=[], coerce=int)
     cantidad_pedido = IntegerField('cantidad_pedido', validators=[validators.DataRequired(), validators.NumberRange(min=1)])
     proveedor = StringField('proveedor',[validators.Length(min=4, max=200)])
     usuario=StringField('proveedor',[validators.Length(min=2, max=100)])

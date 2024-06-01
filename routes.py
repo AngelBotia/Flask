@@ -32,6 +32,7 @@ def mostrar_productos():
 def crear_albaranes():
     productos = Producto.query.all()
     albaranes = Albaran.query.all()
+    albaranForm = AlbaranForm()
     form = ProductosForm()
     form.producto.choices = [(producto.id_producto, producto.nombre) for producto in productos]
     productToEdit = Producto.query.filter_by(id_producto=form.producto.data).first()
