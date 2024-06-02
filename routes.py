@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,redirect,flash
 from models import Producto, Albaran, Facturacion,db
-from form import AlbaranEditForm, ProductosForm, AlbaranForm, FacturasForm
+from form import AlbaranEditForm, FacturacionEditForm, ProductosForm, AlbaranForm, FacturasForm
 main = Blueprint("main",__name__)
 
 
@@ -127,3 +127,25 @@ def crear_facturas():
         else:
             flash("❌NO SE PUEDE VENDER MAS PRODUCTOS DE LOS QUE HAY EN STOCK",'error')
     return render_template("facturas.html",form=form,facturas=facturas)
+
+@main.route('/facturacion/edit',methods=["GET","POST"])
+def editar_productos():
+    productos = Producto.query.all()
+    facturas = Facturacion.query.all()
+    formToEditFacturacion=FacturacionEditForm()
+    formToEditFacturacion.id_factura.choices=  [(factura.id_factura, factura.id_factura) for factura in facturas]
+    form = FacturasForm()
+    form.id_producto.choices = [(producto.id_producto, producto.nombre) for producto in productos]
+
+    if form.validate_on_submit():
+            currentFacturaObject = Facturacion.query.filter_by(id_factura=formToEditFacturacion.id_factura.data).first()
+            currentFacturaObject.id_producto = form.id_producto.data
+            currentFacturaObject.cantidad_vendida = form.cantidad_vendida.data
+            currentFacturaObject.id_cliente = form.id_cliente.data
+            db.session.add(currentFacturaObject)
+            db.session.commit()
+            form.cantidad_vendida.data=0
+            form.id_cliente.data=""
+            flash('✅Se ha modificado la factura correctamente','success')
+            return redirect("/facturacion/edit")
+    return render_template("facturacionEdit.html",form=form,facturas=facturas,formToEditFacturacion=formToEditFacturacion)

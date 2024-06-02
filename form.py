@@ -26,3 +26,6 @@ class FacturasForm(FlaskForm):
 
 class AlbaranEditForm(FlaskForm):
     id_albaran =  SelectField('id_albaran', choices=[], coerce=int)
+
+class FacturacionEditForm(FlaskForm):
+    id_factura =  SelectField('id_factura', choices=[], coerce=int)

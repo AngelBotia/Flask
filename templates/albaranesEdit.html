@@ -7,6 +7,39 @@
     <link rel="stylesheet" href="static/style.css">
 
 </head>
+<style>
+    *{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body{
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 2rem;
+}
+button{
+    padding: 1rem;
+    border-radius: 13px;
+    border: none;
+    font-size: larger;
+    color: black;
+    background: darkgrey;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+table{
+    text-align: center;
+    width: 50%;
+    margin: 1rem;
+}
+</style>
 <body style=" 
 height: 90%;
 width: 90%;
@@ -35,6 +68,7 @@ margin-top: 2rem;">
     </div>
 
     <h1>EDITAR ALBARANES</h1>
+    <hr style="width: 100%;">
     <table border style=" 
     text-align: center;
     width: 50%;
@@ -74,7 +108,7 @@ margin-top: 2rem;">
         <label >Fecha de creacion <input placeholder="No se puede modificar" type="date" disabled></label>
         <label>Usuario {{form.usuario}}</label>
 
-        <button type="submit">modificar</button>
+        <button type="submit" style="background-color: orange;">modificar</button>
     </form>
 
     <h2><span style="color: red;">ADVERTENCIA:</span> La edicion de albaranes solo afectara su registro NO a la cantidad de productos ni el tipo de producto pedido </h2>

@@ -7,23 +7,58 @@
         <link rel="stylesheet" href="static/style.css">
     </head>
     <body>
+<style>
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+body{
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 2rem;
+}
+button{
+    padding: 1rem;
+    border-radius: 13px;
+    border: none;
+    font-size: larger;
+    color: black;
+    background: darkgrey;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+table{
+    text-align: center;
+    width: 50%;
+    margin: 1rem;
+}
+</style>
         <div style="
         display: flex;
         justify-content: space-between;
         width: 100%;">
-            <button><a href="/productos">⬅Productos</a></button>  <button><a href="/albaranes">Albaranes➡</a></button>
+            <button><a href="/facturacion">⬅Facturacion</a></button> 
         </div>
-        <h1>FACTURAS</h1>
+        <h1>EDITAR FACTURAS</h1>
         <hr style="width: 100%;">
 
-        <h2>CREA UNA FACTURA:</h2>
+        <h2>EDITA UNA FACTURA:</h2>
         <form method="post" >
             {{ form.hidden_tag() }}
+            <label >ID Factura a editar:{{formToEditFacturacion.id_factura}}</label>
+            <br>
             <label >Producto {{form.id_producto}}</label>
             <label >Cantidad {{form.cantidad_vendida}}</label>
             <label >Cliente {{form.id_cliente}}</label>
             
-            <button style="padding: 0.5rem 1rem;" type="submit">Enviar</button>
+            <button style="padding: 0.5rem 1rem; background-color: orange;" type="submit">Modificar</button>
         </form>
     <table border style="text-align: center;">
         <thead>
@@ -54,13 +89,9 @@
         <div >{{ message }}</div>
     {% endif %}
 {% endwith %}
+<h2><span style="color: red;">ADVERTENCIA:</span> La edicion de la Factuacion solo afectara su registro NO a la cantidad de productos ni el tipo de producto vendido </h2>
 
-<div style="
-display: flex;
-width: 100%;">
-   <button style="background-color: orange;"><a href="/facturacion/edit">Editar</a></button>  
-   <button style="background-color: red;"><a href="/facturacion/delete">Borrar</a></button>
-</div>
+
 </body>
 </html>
 
