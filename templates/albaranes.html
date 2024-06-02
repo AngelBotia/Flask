@@ -8,10 +8,11 @@
 <body>
     <h1>Generar nuevo albaran</h1>
     <form method="post" >
-        {{ form.hidden_tag() }}
-        <label >Producto {{form.producto}}</label>
-        <label >Cantidad {{form.cantidad}}</label>
- 
+        {{ formAlbaran.hidden_tag() }}
+        <label >Producto {{formAlbaran.id_producto}}</label>
+        <label >Cantidad {{formAlbaran.cantidad_pedido}}</label>
+        <label >Proveedor {{formAlbaran.proveedor}}</label>
+        <label >Usuario {{formAlbaran.usuario}}</label>
         <button type="submit">Enviar</button>
     </form>
     <h1>Albaranes</h1>

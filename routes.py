@@ -15,7 +15,7 @@ def mostrar_productos():
     form = ProductosForm()
    
     try:    
-        newProduct= Producto(cantidad=form.cantidad.data,nombre=form.nombre.data,descripcion=form.descripcion.data,precio_unitario=form.precio_unitario.data)
+        newProduct= Producto(cantidad=0,nombre=form.nombre.data,descripcion=form.descripcion.data,precio_unitario=form.precio_unitario.data)
         if not Producto.query.filter_by(nombre=newProduct.nombre).first():#usaremos el nombre como identificador para que no se duplique
          db.session.add(newProduct)
          db.session.commit()
@@ -32,20 +32,27 @@ def mostrar_productos():
 def crear_albaranes():
     productos = Producto.query.all()
     albaranes = Albaran.query.all()
-    albaranForm = AlbaranForm()
-    form = ProductosForm()
-    form.producto.choices = [(producto.id_producto, producto.nombre) for producto in productos]
-    productToEdit = Producto.query.filter_by(id_producto=form.producto.data).first()
-    if (productToEdit):
-        productToEdit.cantidad += form.cantidad.data
-        newAlbaran=Albaran(id_producto=productToEdit.id_producto, cantidad_pedido=form.cantidad.data)
-        db.session.add(newAlbaran)
-        db.session.commit()
-        flash('✅Se ha realizado el albaran correctamente','success')
-        redirect("/albaranes")
-  
+    formAlbaran = AlbaranForm()
+    formAlbaran.id_producto.choices = [(producto.id_producto, producto.nombre) for producto in productos]
+    productToEdit = Producto.query.filter_by(id_producto=formAlbaran.id_producto.data).first()
+    if formAlbaran.validate_on_submit() and productToEdit: 
+        newAlbaran=Albaran(id_producto=productToEdit.id_producto,
+                            cantidad_pedido=formAlbaran.cantidad_pedido.data,
+                            proveedor=formAlbaran.proveedor.data,
+                            usuario=formAlbaran.usuario.data)
         
-    return render_template("albaranes.html",form = form,albaranes=albaranes)
+      
+        db.session.add(newAlbaran)
+        productToEdit.cantidad += formAlbaran.cantidad_pedido.data
+        db.session.commit()
+        formAlbaran.proveedor.data=""
+        formAlbaran.usuario.data=""
+        flash('✅Se ha realizado el albaran correctamente','success')
+        return redirect("/albaranes")
+    else:
+        flash('❌ Hubo un problema durante la creacion del albaran')
+        
+    return render_template("albaranes.html",albaranes=albaranes,formAlbaran=formAlbaran)
 
 @main.route('/albaranes/edit', methods=["GET", "POST"])
 def editar_albaranes():

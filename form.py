@@ -16,7 +16,6 @@ class ProductosForm(FlaskForm):
 
 
 class AlbaranForm(FlaskForm):
-    id_albaran = SelectField('id_albaran', choices=[], coerce=int)
     id_producto =  SelectField('id_producto', choices=[], coerce=int)
     cantidad_pedido = IntegerField('cantidad_pedido', validators=[validators.DataRequired(), validators.NumberRange(min=1)])
     proveedor = StringField('proveedor',[validators.Length(min=4, max=200)])
