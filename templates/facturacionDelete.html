@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Facturas</title>
+        <link rel="stylesheet" href="static/style.css">
+    </head>
+    <body>
+<style>
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+body{
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 2rem;
+}
+button{
+    padding: 1rem;
+    border-radius: 13px;
+    border: none;
+    font-size: larger;
+    color: black;
+    background: darkgrey;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+table{
+    text-align: center;
+    width: 50%;
+    margin: 1rem;
+}
+select{
+    height: 3rem;
+    width: 3rem;
+    font-size: x-large;
+    border-radius: 1rem;
+    text-align: center;
+    }
+</style>
+        <div style="
+        display: flex;
+        justify-content: space-between;
+        width: 100%;">
+            <button><a href="/facturacion">⬅Facturacion</a></button> 
+        </div>
+        <h1>BORRAR FACTURAS</h1>
+        <hr style="width: 100%;">
+
+        <h2>BORRA UNA FACTURA:</h2>
+        <form method="post" >
+            {{ formToEditFacturacion.hidden_tag() }}
+            <label >ID Factura a borrar:{{formToEditFacturacion.id_factura}}</label>
+            <button style="padding: 0.5rem 1rem; background-color: red;" type="submit">Borrar</button>
+        </form>
+    <table border style="text-align: center;">
+        <thead>
+           <tr>
+               <th>NºAlbaran</th>
+               <th>ID Producto</th>
+               <th>Cantidad venta</th>
+               <th>Fecha de venta</th>
+               <th>ID Cliente</th>
+           </tr>
+       
+        </thead>
+        <tbody>
+           {% for factura in facturas %}
+           <tr>
+               <td>{{factura.id_factura}}</td>
+               <td>{{factura.id_producto}}</td>
+               <td>{{factura.cantidad_vendida}}</td>
+               <td>{{factura.fecha_venta}}</td>
+               <td>{{factura.id_cliente}}</td>
+           </tr>
+           {% endfor %}
+        </tbody>
+       </table>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% set category, message = messages[0] %}
+        <div >{{ message }}</div>
+    {% endif %}
+{% endwith %}
+<h2><span style="color: red;">ADVERTENCIA:</span> El Borrado de la Factuacion solo afectara su registro NO a la cantidad de productos ni el tipo de producto vendido </h2>
+
+
+</body>
+</html>
+
+
+
+

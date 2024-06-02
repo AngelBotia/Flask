@@ -129,7 +129,7 @@ def crear_facturas():
     return render_template("facturas.html",form=form,facturas=facturas)
 
 @main.route('/facturacion/edit',methods=["GET","POST"])
-def editar_productos():
+def editar_facturas():
     productos = Producto.query.all()
     facturas = Facturacion.query.all()
     formToEditFacturacion=FacturacionEditForm()
@@ -149,3 +149,22 @@ def editar_productos():
             flash('✅Se ha modificado la factura correctamente','success')
             return redirect("/facturacion/edit")
     return render_template("facturacionEdit.html",form=form,facturas=facturas,formToEditFacturacion=formToEditFacturacion)
+
+@main.route('/facturacion/delete',methods=["GET","POST"])
+def borrar_facturas():
+    productos = Producto.query.all()
+    facturas = Facturacion.query.all()
+    formToEditFacturacion=FacturacionEditForm()
+    formToEditFacturacion.id_factura.choices=  [(factura.id_factura, factura.id_factura) for factura in facturas]
+    form = FacturasForm()
+    form.id_producto.choices = [(producto.id_producto, producto.nombre) for producto in productos]
+
+    if formToEditFacturacion.validate_on_submit():
+            currentFacturaObject = Facturacion.query.filter_by(id_factura=formToEditFacturacion.id_factura.data).first()
+            db.session.delete(currentFacturaObject)
+            db.session.commit()
+            form.cantidad_vendida.data=0
+            form.id_cliente.data=""
+            flash('✅Se ha modificado la factura correctamente','success')
+            return redirect("/facturacion/delete")
+    return render_template("facturacionDelete.html",facturas=facturas,formToEditFacturacion=formToEditFacturacion)
