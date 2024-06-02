@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Productos</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
+    <div style="
+    display: flex;
+    justify-content: space-between;
+    width: 100%;">
+        <button><a href="/facturacion">⬅Facturacion</a></button>  <button><a href="/albaranes">Albaranes➡</a></button>
+    </div>
     <h1>PRODUCTOS</h1>
+    <hr style="width: 100%;">
+
+    <h2>CREA UN PRODUCTO:</h2>
     <form method="post">
+        
         {{ form.hidden_tag() }}
         <label >Nombre {{form.nombre}}</label>
         <label >Descripcion {{form.descripcion}}</label>
         <label >Precio Und. {{form.precio_unitario}}</label>
-
-
-        <button type="submit">Enviar</button>
+        <button style="padding: 0.5rem 1rem;" type="submit">Crear</button>
     </form>
-    <p>
-        {% for error in form.producto.errors %}
-        {{ error }}
-        {% endfor %}
-    </p>
+
     <table border style="text-align: center;">
      <thead>
         <tr>
@@ -45,7 +50,12 @@
         {% endfor %}
      </tbody>
     </table>
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% set category, message = messages[0] %}
+        <div >{{ message }}</div>
+    {% endif %}
+     {% endwith %}
 
 </body>
 </html>

@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Facturas</h1>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Facturas</title>
+        <link rel="stylesheet" href="static/style.css">
+    </head>
+    <body>
+        <div style="
+        display: flex;
+        justify-content: space-between;
+        width: 100%;">
+            <button><a href="/productos">⬅Productos</a></button>  <button><a href="/albaranes">Albaranes➡</a></button>
+        </div>
+        <h1>FACTURAS</h1>
+        <hr style="width: 100%;">
+
+        <h2>CREA UNA FACTURA:</h2>
+        <form method="post" >
+            {{ form.hidden_tag() }}
+            <label >Producto {{form.id_producto}}</label>
+            <label for="">Cantidad {{form.cantidad_vendida}}</label>
+            <label for="">Cliente {{form.id_cliente}}</label>
+            
+            <button style="padding: 0.5rem 1rem;" type="submit">Enviar</button>
+        </form>
     <table border style="text-align: center;">
         <thead>
            <tr>
@@ -30,14 +48,6 @@
            {% endfor %}
         </tbody>
        </table>
-
-
-    <h1>CREA UNA FACTURA</h1>
-    <form method="post" >
-        <label >Producto {{form.producto}}</label>
-        <label for="">Cantidad {{form.cantidad}}</label>
-        <button type="submit">Enviar</button>
-    </form>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% set category, message = messages[0] %}

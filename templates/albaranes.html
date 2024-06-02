@@ -3,19 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Albaranes</title>
+    <link rel="stylesheet" href="static/style.css">
+
 </head>
 <body>
-    <h1>Generar nuevo albaran</h1>
+    <div style="
+    display: flex;
+    justify-content: space-between;
+    width: 100%;">
+        <button><a href="/productos">⬅Productos</a></button>  <button><a href="/facturacion">Facturacion➡</a></button>
+    </div>
+    <h1>ALBARANES</h1>
+    <hr style="width: 100%;">
+
+
+
+
+    <h2>CREA UN ALBARAN:</h2>
     <form method="post" >
         {{ formAlbaran.hidden_tag() }}
         <label >Producto {{formAlbaran.id_producto}}</label>
         <label >Cantidad {{formAlbaran.cantidad_pedido}}</label>
         <label >Proveedor {{formAlbaran.proveedor}}</label>
         <label >Usuario {{formAlbaran.usuario}}</label>
-        <button type="submit">Enviar</button>
+        <button style="padding: 0.5rem 1rem;" type="submit">Enviar</button>
     </form>
-    <h1>Albaranes</h1>
     <table border style="text-align: center;">
         <thead>
            <tr>

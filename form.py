@@ -8,8 +8,6 @@ class PostForm(FlaskForm):
         ])
 
 class ProductosForm(FlaskForm):
-    producto = SelectField('producto', choices=[], coerce=lambda x: int(x) if x is not None else None)
-    cantidad = IntegerField('cantidad', validators=[validators.DataRequired(), validators.NumberRange(min=0)])
     nombre = StringField('nombre',[validators.Length(min=4, max=200)])
     descripcion = StringField('descripcion',[validators.Length(min=4, max=255)])
     precio_unitario = IntegerField('precio', validators=[validators.DataRequired(), validators.NumberRange(min=0)])
@@ -20,3 +18,8 @@ class AlbaranForm(FlaskForm):
     cantidad_pedido = IntegerField('cantidad_pedido', validators=[validators.DataRequired(), validators.NumberRange(min=1)])
     proveedor = StringField('proveedor',[validators.Length(min=4, max=200)])
     usuario=StringField('proveedor',[validators.Length(min=2, max=100)])
+
+class FacturasForm(FlaskForm):
+    id_producto =  SelectField('id_producto', choices=[], coerce=int)
+    cantidad_vendida = IntegerField('cantidad_vendida', validators=[validators.DataRequired(), validators.NumberRange(min=1)])
+    id_cliente=StringField('proveedor',[validators.Length(min=2, max=100)])
