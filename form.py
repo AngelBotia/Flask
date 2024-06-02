@@ -23,3 +23,6 @@ class FacturasForm(FlaskForm):
     id_producto =  SelectField('id_producto', choices=[], coerce=int)
     cantidad_vendida = IntegerField('cantidad_vendida', validators=[validators.DataRequired(), validators.NumberRange(min=1)])
     id_cliente=StringField('proveedor',[validators.Length(min=2, max=100)])
+
+class AlbaranEditForm(FlaskForm):
+    id_albaran =  SelectField('id_albaran', choices=[], coerce=int)

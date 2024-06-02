@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request,redirect,flash
 from models import Producto, Albaran, Facturacion,db
-from form import ProductosForm, AlbaranForm, FacturasForm
+from form import AlbaranEditForm, ProductosForm, AlbaranForm, FacturasForm
 main = Blueprint("main",__name__)
 
 
@@ -62,22 +62,44 @@ def editar_albaranes():
     productos = Producto.query.all()
     albaranes = Albaran.query.all()
     formAlbaran = AlbaranForm()
-    formAlbaran.id_albaran.choices = [(albaran.id_albaran, albaran.id_albaran) for albaran in albaranes]
-    formAlbaran.id_producto = [(producto.id_producto, producto.nombre) for producto in productos]
+    formEditAlbaran = AlbaranEditForm()
+    formEditAlbaran.id_albaran.choices = [(albaran.id_albaran, albaran.id_albaran) for albaran in albaranes]
+    formAlbaran.id_producto.choices = [(producto.id_producto, producto.nombre) for producto in productos]
     
-    
-    # productToEdit = Producto.query.filter_by(id_producto=form.producto.data).first()
-    # if (productToEdit):
-    #     productToEdit.cantidad += form.cantidad.data
-    #     newAlbaran=Albaran(id_producto=productToEdit.id_producto, cantidad_pedido=form.cantidad.data)
-    #     db.session.add(newAlbaran)
-    #     db.session.commit()
-    #     print('Se ha realizado el albaran correctamente')
-    #     redirect("/albaranes")
-    # else:
-    #     print("NO SE HA ENCONTRADO EL PRODUCTO EN LA BASE DE DATOS")
+    if formEditAlbaran.validate_on_submit():
+        albaranToEdit = Albaran.query.filter_by(id_albaran=formEditAlbaran.id_albaran.data).first()
+        albaranToEdit.id_producto= formAlbaran.id_producto.data
+        albaranToEdit.cantidad_pedido= formAlbaran.cantidad_pedido.data
+        albaranToEdit.usuario= formAlbaran.usuario.data
+        albaranToEdit.proveedor= formAlbaran.proveedor.data
+        db.session.add(albaranToEdit)
+        db.session.commit()
+
+        formAlbaran.cantidad_pedido.data=0
+        formAlbaran.usuario.data=''
+        formAlbaran.proveedor.data=''
+        flash('✅Se ha realizado el albaran correctamente','success')
+        return redirect('/albaranes/edit')
         
-    return render_template("albaranesEdit.html",form=formAlbaran,albaranes=albaranes,productos=productos)
+    return render_template("albaranesEdit.html",form=formAlbaran,albaranes=albaranes,formEditAlbaran=formEditAlbaran)
+
+@main.route('/albaranes/delete', methods=["GET", "POST"])
+def borrar_albaranes():
+    productos = Producto.query.all()
+    albaranes = Albaran.query.all()
+    formAlbaran = AlbaranForm()
+    formEditAlbaran = AlbaranEditForm()
+    formEditAlbaran.id_albaran.choices = [(albaran.id_albaran, albaran.id_albaran) for albaran in albaranes]
+    formAlbaran.id_producto.choices = [(producto.id_producto, producto.nombre) for producto in productos]
+    
+    if formEditAlbaran.validate_on_submit():
+        albaranToEdit = Albaran.query.filter_by(id_albaran=formEditAlbaran.id_albaran.data).first()
+        db.session.delete(albaranToEdit)
+        db.session.commit()
+        flash('✅Se ha borrado el albaran correctamente','success')
+        return redirect('/albaranes/delete')
+        
+    return render_template("alabaranesDelete.html",form=formAlbaran,albaranes=albaranes,formEditAlbaran=formEditAlbaran)
 
 
 

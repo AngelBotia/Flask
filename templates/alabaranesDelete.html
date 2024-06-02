@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar albaranes</title>
+    <title>BORRAR ALBARANES</title>
     <link rel="stylesheet" href="static/style.css">
 
 </head>
+<style>
+    select{
+    height: 3rem;
+    width: 3rem;
+    font-size: x-large;
+    border-radius: 1rem;
+    text-align: center;
+    }
+</style>
 <body style=" 
 height: 90%;
 width: 90%;
@@ -32,9 +41,10 @@ margin-top: 2rem;">
         <a style="  
         text-decoration: none;
         color: black;" href="/albaranes">⬅Albaranes</a></button>  
+      
     </div>
 
-    <h1>EDITAR ALBARANES</h1>
+    <h1>BORRAR ALBARANES</h1>
     <table border style=" 
     text-align: center;
     width: 50%;
@@ -64,20 +74,14 @@ margin-top: 2rem;">
         </tbody>
        </table>
 
-    <h1>Editar albaran</h1>
+    <h1>Borrar albaran</h1>
     <form method="post" >
         {{ formEditAlbaran.hidden_tag() }}
-        <label > NºAlbaran a editar: {{formEditAlbaran.id_albaran}}</label>
-        <label >ID producto: {{form.id_producto}}</label>
-        <label>Cantidad de productos {{form.cantidad_pedido}}</label>
-        <label>Proveedor: {{form.proveedor}}</label>
-        <label >Fecha de creacion <input placeholder="No se puede modificar" type="date" disabled></label>
-        <label>Usuario {{form.usuario}}</label>
-
-        <button type="submit">modificar</button>
+        <label > NºAlbaran a borrar: {{formEditAlbaran.id_albaran}}</label>
+        <button type="submit" style="padding: 0.5rem; background-color: red; font-size: x-large;">Borrar</button>
     </form>
 
-    <h2><span style="color: red;">ADVERTENCIA:</span> La edicion de albaranes solo afectara su registro NO a la cantidad de productos ni el tipo de producto pedido </h2>
+    <h2><span style="color: red;">ADVERTENCIA:</span> El Borrado de albaranes solo afectara su registro NO a la cantidad de productos ni el tipo de producto pedido </h2>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% set category, message = messages[0] %}
